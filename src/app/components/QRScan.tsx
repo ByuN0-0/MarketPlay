@@ -47,6 +47,7 @@ const QRScan: React.FC = () => {
           <Image src={Fivethousandwon} alt={'5000won'}/>
           여기까지 예시 아래가 qr찍은 결과
         </div>
+        <hr></hr>
         {result && result.price === 500 && (
             <Image src={Fivehundredwon} alt={'500won'}/>
         )}
