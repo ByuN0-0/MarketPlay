@@ -24,7 +24,7 @@ const QRScan: React.FC = () => {
   return (
     <div style={{ textAlign: 'center', padding: '20px' }}>
       <h1>QR 코드 스캔</h1>
-      <video ref={videoRef} style={{ width: '300px', height: 'auto' }} /> {/* 비디오 요소 */}
+      <video ref={videoRef} style={{ width: '200px', height: '200px' }} /> {/* 비디오 요소 */}
       <p>QR 코드 결과: {result}</p>
     </div>
   );
