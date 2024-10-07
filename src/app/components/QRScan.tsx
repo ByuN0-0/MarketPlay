@@ -92,6 +92,14 @@ const QRScan: React.FC = () => {
                 <Image src={Onethousandwon} alt={'1000won'} width={400}/>
               </div>
           )}
+          {result && result.price === 4000 && (
+              <div>
+                <Image src={Onethousandwon} alt={'1000won'} width={400}/>
+                <Image src={Onethousandwon} alt={'1000won'} width={400}/>
+                <Image src={Onethousandwon} alt={'1000won'} width={400}/>
+                <Image src={Onethousandwon} alt={'1000won'} width={400}/>
+              </div>
+          )}
           {result && result.price === 4500 && (
               <div>
                 <Image src={Fivehundredwon} alt={'500won'} width={200}/>
@@ -105,6 +113,12 @@ const QRScan: React.FC = () => {
           {result && result.price === 5500 && (
               <div>
                 <Image src={Fivehundredwon} alt={'500won'} width={200}/>
+                <Image src={Fivethousandwon} alt={'5000won'} width={400}/>
+              </div>
+          )}
+          {result && result.price === 6000 && (
+              <div>
+                <Image src={Onethousandwon} alt={'1000won'} width={400}/>
                 <Image src={Fivethousandwon} alt={'5000won'} width={400}/>
               </div>
           )}
