@@ -49,7 +49,6 @@ const QRScan: React.FC = () => {
                   height: '400px',
                   borderStyle: 'solid',
                   borderWidth: '3px',
-                  borderColor: 'magenta',
                 }}
             />
           </div>
