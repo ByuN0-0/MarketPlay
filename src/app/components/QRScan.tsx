@@ -18,7 +18,7 @@ const QRScan: React.FC = () => {
   const [error, setError] = useState<string | null>(null); // 에러 메시지
   const beepSound = useRef<HTMLAudioElement | null>(null); // 비프음 소리 파일을 위한 ref
   useEffect(() => {
-    beepSound.current = new Audio('/beep.mp3');
+    beepSound.current = new Audio('/sound/beep.mp3');
     const qrScanner = new QrScanner(videoRef.current!, (scanResult) => {
       try {
         // JSON 파싱
