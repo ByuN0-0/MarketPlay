@@ -45,8 +45,8 @@ const QRScan: React.FC = () => {
             <video
                 ref={videoRef}
                 style={{
-                  width: '300px',
-                  height: '300px',
+                  width: '400px',
+                  height: '400px',
                   borderStyle: 'solid',
                   borderWidth: '3px',
                   borderColor: 'magenta',
