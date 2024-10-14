@@ -30,6 +30,11 @@ const QRScan: React.FC = () => {
         try {
           const parsedResult: QRCodeData = JSON.parse(result);
           setResult(parsedResult);
+          // 이전 가격 소리가 재생 중이라면 중지
+          if (priceSound.current) {
+            priceSound.current.pause();
+            priceSound.current.currentTime = 0; // 소리 초기화
+          }
           priceSound.current = new Audio(`/sound/s${parsedResult.price}.m4a`);
           beepSound.current?.play();
           priceSound.current?.play();
