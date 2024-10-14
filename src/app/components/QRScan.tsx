@@ -23,20 +23,16 @@ const QRScan: React.FC = () => {
   const [error, setError] = useState<string | null>(null); // 에러 메시지
   const beepSound = useRef<HTMLAudioElement | null>(null); // 비프음 소리 파일을 위한 ref
   const priceSound = useRef<HTMLAudioElement | null>(null);
-  const playSound = (price: number) => {
-    priceSound.current = new Audio(`/sound/s${price}.m4a`);
-    priceSound.current?.play();
-  }
+
   useEffect(() => {
     if (videoRef.current) {
       const qrScanner = new QrScanner(videoRef.current, (result) => {
         try {
           const parsedResult: QRCodeData = JSON.parse(result);
           setResult(parsedResult);
+          priceSound.current = new Audio(`/sound/s${parsedResult.price}.m4a`);
           beepSound.current?.play();
-          setTimeout(() => {
-            playSound(parsedResult.price);
-          }, 1500);
+          priceSound.current?.play();
           setError(null);
         } catch (error) {
           console.error('QR 코드 스캔 실패:', error);
