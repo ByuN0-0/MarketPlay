@@ -19,21 +19,27 @@ const QRScan: React.FC = () => {
   const beepSound = useRef<HTMLAudioElement | null>(null); // 비프음 소리 파일을 위한 ref
   useEffect(() => {
     beepSound.current = new Audio('/sound/beep.mp3');
-    const qrScanner = new QrScanner(videoRef.current!, (scanResult) => {
-      try {
-        // JSON 파싱
-        const parsedResult: QRResult = JSON.parse(scanResult); // 인터페이스 사용
-        setResult(parsedResult); // QR 코드 결과를 상태에 저장
-        beepSound.current?.play(); // 비프음 재생
-        setTimeout(() => {
-          playSound(parsedResult.price);
-        }, 2000); // 2000ms = 2초
-        setError(null); // 에러 초기화
-      } catch (err) {
-        console.error('Failed to parse JSON:', err);
-        setError('QR 코드 스캔 실패. 다시 시도해 주세요.'); // 에러 메시지 저장
-      }
-    });
+    const qrScanner = new QrScanner(
+        videoRef.current!,
+        (scanResult) => {
+          try {
+            // JSON 파싱
+            const parsedResult: QRResult = JSON.parse(scanResult); // 인터페이스 사용
+            setResult(parsedResult); // QR 코드 결과를 상태에 저장
+            beepSound.current?.play(); // 비프음 재생
+            setTimeout(() => {
+              playSound(parsedResult.price);
+            }, 1500); // 2000ms = 2초
+            setError(null); // 에러 초기화
+          } catch (err) {
+            console.error('Failed to parse JSON:', err);
+            setError('QR 코드 스캔 실패. 다시 시도해 주세요.'); // 에러 메시지 저장
+          }
+          qrScanner.stop();
+          setTimeout(() => qrScanner.start(), 1000); // 1초 후 다시 스캔 시작
+        }
+    );
+
 
     qrScanner.start(); // QR 스캐너 시작
 
