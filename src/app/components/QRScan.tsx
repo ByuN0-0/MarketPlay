@@ -1,7 +1,7 @@
 // components/QRScan.tsx
 'use client';
 
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import QrScanner from 'qr-scanner';
 import Image from 'next/image';
 import Fivehundredwon from '../../../public/image/500won.png';
@@ -22,17 +22,11 @@ const QRScan: React.FC = () => {
   const [result, setResult] = useState<QRResult | null>(null); // QR 코드 스캔 결과의 타입을 지정
   const [error, setError] = useState<string | null>(null); // 에러 메시지
   const beepSound = useRef<HTMLAudioElement | null>(null); // 비프음 소리 파일을 위한 ref
-  const [isSoundPlaying, setIsSoundPlaying] = useState(false);
-  const playSound = useCallback((price: number) => {
-    if (!isSoundPlaying) {
-      const audio = new Audio(`/sound/s${price}.m4a`);
-      audio.play();
-      setIsSoundPlaying(true);
-
-      audio.onended = () => setIsSoundPlaying(false);
-    }
-  }, [isSoundPlaying]); // 의존성 배열에 isSoundPlaying 추가
-
+  const priceSound = useRef<HTMLAudioElement | null>(null);
+  const playSound = (price: number) => {
+    priceSound.current = new Audio(`/sound/s${price}.m4a`);
+    priceSound.current?.play();
+  }
   useEffect(() => {
     if (videoRef.current) {
       const qrScanner = new QrScanner(videoRef.current, (result) => {
@@ -62,14 +56,7 @@ const QRScan: React.FC = () => {
     } else {
       setError('비디오 요소를 찾을 수 없습니다.');
     }
-  }, [playSound]);
-
-
-  useEffect(() => {
-    if (result) {
-      playSound(result.price);
-    }
-  }, [result, playSound]); // playSound 추가
+  }, []);
 
   return (
       <div>
