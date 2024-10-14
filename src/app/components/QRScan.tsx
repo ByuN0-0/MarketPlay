@@ -25,6 +25,9 @@ const QRScan: React.FC = () => {
         const parsedResult: QRResult = JSON.parse(scanResult); // 인터페이스 사용
         setResult(parsedResult); // QR 코드 결과를 상태에 저장
         beepSound.current?.play(); // 비프음 재생
+        setTimeout(() => {
+          playSound(parsedResult.price);
+        }, 2000); // 2000ms = 2초
         setError(null); // 에러 초기화
       } catch (err) {
         console.error('Failed to parse JSON:', err);
@@ -38,6 +41,10 @@ const QRScan: React.FC = () => {
       qrScanner.stop(); // 컴포넌트 언마운트 시 스캐너 중지
     };
   }, []);
+  const playSound = (price: number) => {
+    const audio = new Audio(`/sound/s${price}.mp3`); // 예: s500.mp3, s1000.mp3
+    audio.play(); // 사운드 재생
+  };
 
   return (
       <div>
