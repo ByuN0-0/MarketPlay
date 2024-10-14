@@ -42,7 +42,7 @@ const QRScan: React.FC = () => {
     };
   }, []);
   const playSound = (price: number) => {
-    const audio = new Audio(`/sound/s${price}.mp3`); // 예: s500.mp3, s1000.mp3
+    const audio = new Audio(`/sound/s${price}.m4a`); // 예: s500.mp3, s1000.mp3
     audio.play(); // 사운드 재생
   };
 
