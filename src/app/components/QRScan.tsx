@@ -2,7 +2,7 @@
 'use client';
 
 import React, {useEffect, useRef, useState} from 'react';
-import QrScanner from 'qr-scanner';
+import {Scanner} from 'instascan';
 import Image from 'next/image';
 import Fivehundredwon from '../../../public/image/500won.png';
 import Onethousandwon from '../../../public/image/1000won.png';
@@ -12,41 +12,58 @@ interface QRResult {
   price: number;
 }
 
+interface QRCodeData {
+  price: number;
+  // 다른 필요한 속성 추가
+}
+
 const QRScan: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null); // 비디오 요소를 참조하기 위한 ref
   const [result, setResult] = useState<QRResult | null>(null); // QR 코드 스캔 결과의 타입을 지정
   const [error, setError] = useState<string | null>(null); // 에러 메시지
   const beepSound = useRef<HTMLAudioElement | null>(null); // 비프음 소리 파일을 위한 ref
   useEffect(() => {
+    const scanner = new Scanner({video: videoRef.current});
     beepSound.current = new Audio('/sound/beep.mp3');
-    const qrScanner = new QrScanner(
-        videoRef.current!,
-        (scanResult) => {
-          try {
-            // JSON 파싱
-            const parsedResult: QRResult = JSON.parse(scanResult); // 인터페이스 사용
-            setResult(parsedResult); // QR 코드 결과를 상태에 저장
-            beepSound.current?.play(); // 비프음 재생
-            setTimeout(() => {
-              playSound(parsedResult.price);
-            }, 1500); // 2000ms = 2초
-            setError(null); // 에러 초기화
-          } catch (err) {
-            console.error('Failed to parse JSON:', err);
-            setError('QR 코드 스캔 실패. 다시 시도해 주세요.'); // 에러 메시지 저장
-          }
-          qrScanner.stop();
-          setTimeout(() => qrScanner.start(), 1000); // 1초 후 다시 스캔 시작
+    scanner.addListener('scan', (scanResult: string) => {
+      try {
+        // JSON 파싱 전에 유효성 검사
+        if (!scanResult || typeof scanResult !== 'string') {
+          throw new Error('Invalid scan result');
         }
-    );
 
+        const parsedResult: QRCodeData = JSON.parse(scanResult);
+        setResult(parsedResult);
+        beepSound.current?.play();
 
-    qrScanner.start(); // QR 스캐너 시작
+        setTimeout(() => {
+          playSound(parsedResult.price);
+        }, 2000);
+
+        setError(null);
+      } catch (error) {
+        console.error('QR 코드 스캔 실패:', error);
+        if (error instanceof SyntaxError) {
+          setError('QR 코드 형식이 올바르지 않습니다.');
+        } else {
+          setError('QR 코드 스캔 중 오류가 발생했습니다. 다시 시도해주세요.');
+        }
+      }
+    });
+
+    scanner.start()
+        .then(() => {
+          console.log('QR 코드 스캔 시작');
+        })
+        .catch((error: Error) => {
+          console.error('스캐너 시작 실패:', error);
+          setError('카메라 접근 권한이 필요합니다. 브라우저 설정에서 허용해주세요.');
+        });
 
     return () => {
-      qrScanner.stop(); // 컴포넌트 언마운트 시 스캐너 중지
+      scanner.stop();
     };
-  }, []);
+  }, [videoRef]);
   const playSound = (price: number) => {
     const audio = new Audio(`/sound/s${price}.m4a`); // 예: s500.mp3, s1000.mp3
     audio.play(); // 사운드 재생
