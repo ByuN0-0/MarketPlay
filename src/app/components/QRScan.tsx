@@ -7,14 +7,12 @@ import Image from 'next/image';
 import Fivehundredwon from '../../../public/image/500won.png';
 import Onethousandwon from '../../../public/image/1000won.png';
 import Fivethousandwon from '../../../public/image/5000won.png';
+import Onehundredwon from '../../../public/image/100won.png';
+import Tenwon from '../../../public/image/10won.png';
 
 interface QRResult {
   price: number;
-}
-
-interface QRCodeData {
-  price: number;
-  // 다른 필요한 속성 추가
+  product: string | null;
 }
 
 const QRScan: React.FC = () => {
@@ -26,16 +24,20 @@ const QRScan: React.FC = () => {
 
   useEffect(() => {
     if (videoRef.current) {
-      const qrScanner = new QrScanner(videoRef.current, (result) => {
+      const qrScanner = new QrScanner(videoRef.current, (qrjson) => {
         try {
-          const parsedResult: QRCodeData = JSON.parse(result);
+          const parsedResult: QRResult = JSON.parse(qrjson);
           setResult(parsedResult);
           // 이전 가격 소리가 재생 중이라면 중지
           if (priceSound.current) {
             priceSound.current.pause();
             priceSound.current.currentTime = 0; // 소리 초기화
           }
-          priceSound.current = new Audio(`/sound/s${parsedResult.price}.m4a`);
+          if (result !== null && result.product !== null) {
+            priceSound.current = new Audio(`/sound/${parsedResult.product}.m4a`);
+          } else {
+            priceSound.current = new Audio(`/sound/s${parsedResult.price}.m4a`);
+          }
           beepSound.current?.play();
           priceSound.current?.play();
           setError(null);
@@ -86,6 +88,46 @@ const QRScan: React.FC = () => {
           {/* 가격에 따라 이미지를 렌더링 */}
           <hr/>
           {result && result.price === 500 && <Image src={Fivehundredwon} alt={'500won'} width={200}/>}
+          {result && result.price === 600 && (
+              <div>
+                <Image src={Fivehundredwon} alt={'500won'} width={200}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+              </div>
+          )}
+          {result && result.price === 700 && (
+              <div>
+                <Image src={Fivehundredwon} alt={'500won'} width={200}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+              </div>
+          )}
+          {result && result.price === 800 && (
+              <div>
+                <Image src={Fivehundredwon} alt={'500won'} width={200}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+              </div>
+          )}
+          {result && result.price === 830 && (
+              <div>
+                <Image src={Fivehundredwon} alt={'500won'} width={200}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+                <Image src={Tenwon} alt={'10won'} width={160}/>
+                <Image src={Tenwon} alt={'10won'} width={160}/>
+                <Image src={Tenwon} alt={'10won'} width={160}/>
+              </div>
+          )}
+          {result && result.price === 900 && (
+              <div>
+                <Image src={Fivehundredwon} alt={'500won'} width={200}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
+              </div>
+          )}
           {result && result.price === 1000 && <Image src={Onethousandwon} alt={'1000won'} width={400}/>}
           {result && result.price === 1500 && (
               <div>
