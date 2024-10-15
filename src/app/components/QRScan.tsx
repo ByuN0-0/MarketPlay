@@ -34,7 +34,7 @@ const QRScan: React.FC = () => {
             priceSound.current.pause();
             priceSound.current.currentTime = 0; // 소리 초기화
           }
-          if (result && result.product !== null) {
+          if (result && result.product) {
             priceSound.current = new Audio(`/sound/${result.product}.m4a`);
           } else if(result) {
             priceSound.current = new Audio(`/sound/s${result.price}.m4a`);
