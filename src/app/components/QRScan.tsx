@@ -21,11 +21,12 @@ const QRScan: React.FC = () => {
   const [error, setError] = useState<string | null>(null); // 에러 메시지
   const beepSound = useRef<HTMLAudioElement | null>(null); // 비프음 소리 파일을 위한 ref
   const priceSound = useRef<HTMLAudioElement | null>(null);
-
+  const [qrjsonResult, setQrjsonResult] = useState<string | null>(null);
   useEffect(() => {
     if (videoRef.current) {
       const qrScanner = new QrScanner(videoRef.current, (qrjson) => {
         try {
+          setQrjsonResult(qrjson);
           const parsedResult: QRResult = JSON.parse(qrjson);
           setResult(parsedResult);
           // 이전 가격 소리가 재생 중이라면 중지
@@ -34,9 +35,9 @@ const QRScan: React.FC = () => {
             priceSound.current.currentTime = 0; // 소리 초기화
           }
           if (result !== null && result.product !== null) {
-            priceSound.current = new Audio(`/sound/${parsedResult.product}.m4a`);
-          } else {
-            priceSound.current = new Audio(`/sound/s${parsedResult.price}.m4a`);
+            priceSound.current = new Audio(`/sound/${result.product}.m4a`);
+          } else if(result!==null) {
+            priceSound.current = new Audio(`/sound/s${result.price}.m4a`);
           }
           beepSound.current?.play();
           priceSound.current?.play();
@@ -80,7 +81,7 @@ const QRScan: React.FC = () => {
 
         {/* QR 코드 결과 출력 및 에러 메시지 */}
         <div style={{padding: '20px', textAlign: 'center'}}>
-          {error ? <p style={{color: 'red'}}>{error}</p> : <p>QR 코드 결과: {result?.price}{result?.product}</p>}
+          {error ? <p style={{color: 'red'}}>{error}</p> : <p>QR 코드 결과: {result?.price}{result?.product}{qrjsonResult}</p>}
         </div>
 
         {/* 이미지와 결과에 따른 렌더링 */}
