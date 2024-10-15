@@ -81,7 +81,9 @@ const QRScan: React.FC = () => {
 
         {/* QR 코드 결과 출력 및 에러 메시지 */}
         <div style={{padding: '20px', textAlign: 'center'}}>
-          {error ? <p style={{color: 'red'}}>{error}</p> : <p>QR 코드 결과: {result?.price}{result?.product}{qrjsonResult}</p>}
+          {error ?
+              <p style={{color: 'red'}}>{error}</p>
+              : <p>QR 코드 결과: {result?.price}원, {result?.product}{/*{qrjsonResult}*/}</p>}
         </div>
 
         {/* 이미지와 결과에 따른 렌더링 */}
