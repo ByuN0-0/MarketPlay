@@ -80,7 +80,7 @@ const QRScan: React.FC = () => {
 
         {/* QR 코드 결과 출력 및 에러 메시지 */}
         <div style={{padding: '20px', textAlign: 'center'}}>
-          {error ? <p style={{color: 'red'}}>{error}</p> : <p>QR 코드 결과: {result?.price}</p>}
+          {error ? <p style={{color: 'red'}}>{error}</p> : <p>QR 코드 결과: {result?.price}{result?.product}</p>}
         </div>
 
         {/* 이미지와 결과에 따른 렌더링 */}
@@ -123,6 +123,7 @@ const QRScan: React.FC = () => {
           {result && result.price === 900 && (
               <div>
                 <Image src={Fivehundredwon} alt={'500won'} width={200}/>
+                <Image src={Onehundredwon} alt={'100won'} width={180}/>
                 <Image src={Onehundredwon} alt={'100won'} width={180}/>
                 <Image src={Onehundredwon} alt={'100won'} width={180}/>
                 <Image src={Onehundredwon} alt={'100won'} width={180}/>
