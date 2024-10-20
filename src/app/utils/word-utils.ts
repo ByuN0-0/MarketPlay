@@ -11,7 +11,7 @@ const wordUtils = (word: string | null) => {
   } else if (word.includes('lion')) {
     return '사자';
   } else if (word.includes('note')) {
-    return '노트';
+    return '공책';
   } else if (word.includes('pencil')) {
     return '연필';
   } else if (word.includes('pencilcase')) {
