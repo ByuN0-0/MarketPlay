@@ -24,6 +24,18 @@ const wordUtils = (word: string | null) => {
     return '딸기';
   } else if (word.includes('watermelon')) {
     return '수박';
+  } else if (word.includes('onion')) {
+    return '양파';
+  } else if (word.includes('ramen')) {
+    return '라면';
+  } else if (word.includes('tofu')) {
+    return '두부';
+  } else if (word.includes('lemon')) {
+    return '레몬';
+  } else if (word.includes('carrot')) {
+    return '당근';
+  } else if (word.includes('milk')) {
+    return '우유';
   }
   return null;
 };

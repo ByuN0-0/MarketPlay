@@ -95,8 +95,8 @@ const QRScan: React.FC = () => {
 
         {/* 이미지와 결과에 따른 렌더링 */}
         <div style={{textAlign: 'center'}}>
-          {result?.product && <Image src={`/image/${result.product}.png`} alt={result.product} width={400}/>}
-          {result && renderPriceImages(result.price)}
+          {result?.product && result?.hypernym && <Image src={`/image/${result.product}.png`} alt={result.product} width={400}/>}
+          {result && result?.price && renderPriceImages(result.price)}
         </div>
       </div>
   );
