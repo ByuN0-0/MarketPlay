@@ -86,7 +86,7 @@ const QRScan: React.FC = () => {
               <p style={{color: 'red'}}>{error}</p>
           ) : result ? (
               result.hypernym ? (
-                  <p style={{fontSize: '80px', textAlign: 'center'}}>{hypernymUtils(result.hypernym)} - {wordUtils(result.product)}</p>
+                  <p style={{fontSize: '50px', textAlign: 'center'}}>{hypernymUtils(result.hypernym)} - {wordUtils(result.product)}</p>
               ) : (
                   <p>{result.price}원, {result.product}</p>
               )
