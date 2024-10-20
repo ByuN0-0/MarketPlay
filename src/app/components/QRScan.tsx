@@ -21,18 +21,19 @@ const QRScan: React.FC = () => {
   const [error, setError] = useState<string | null>(null); // 에러 메시지
   const beepSound = useRef<HTMLAudioElement | null>(null); // 비프음 소리 파일을 위한 ref
   const priceSound = useRef<HTMLAudioElement | null>(null);
-  const [qrjsonResult, setQrjsonResult] = useState<string | null>(null);
   useEffect(() => {
     if (videoRef.current) {
       const qrScanner = new QrScanner(videoRef.current, (qrjson) => {
         try {
-          setQrjsonResult(qrjson);
           const parsedResult: QRResult = JSON.parse(qrjson);
           setResult(parsedResult);
           // 이전 가격 소리가 재생 중이라면 중지
           if (priceSound.current) {
             priceSound.current.pause();
             priceSound.current.currentTime = 0; // 소리 초기화
+          }
+          if (!parsedResult.price) {
+
           }
           if (parsedResult.product) {
           priceSound.current = new Audio(`/sound/${parsedResult.product}.m4a`);
@@ -90,6 +91,7 @@ const QRScan: React.FC = () => {
         <div style={{textAlign: 'center'}}>
           {/* 가격에 따라 이미지를 렌더링 */}
           <hr/>
+          {result && result.product && <Image src={`/image/${result.product}.png`} alt={result.product} width={200}/>}
           {result && result.price === 500 && <Image src={Fivehundredwon} alt={'500won'} width={200}/>}
           {result && result.price === 600 && (
               <div>
