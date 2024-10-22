@@ -12,10 +12,10 @@ const wordUtils = (word: string | null) => {
     return '사자';
   } else if (word.includes('note')) {
     return '공책';
-  } else if (word.includes('pencil')) {
-    return '연필';
   } else if (word.includes('pencilcase')) {
     return '필통';
+  } else if (word.includes('pencil')) {
+    return '연필';
   } else if (word.includes('pig')) {
     return '돼지';
   } else if (word.includes('scissor')) {
