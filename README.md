@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QR Market Play
 
-## Getting Started
+**QR Market Play**는 선생님 공개수업에서 활용할 수 있도록 개발한 인터랙티브 시장놀이 앱입니다.  
+QR코드를 스캔하면 상품의 가격과 사물 정보, 그리고 음성이 함께 출력되어 실제 시장 환경을 체험하며 경제 개념을 쉽고 재미있게 학습할 수 있습니다.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 주요 기능
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **실시간 정보 제공:**  
+  QR코드를 스캔하면 즉시 해당 상품의 가격, 사물 정보(상품명 등)와 음성이 출력됩니다.
 
-You can start editing the page by modifying `app/QRScan.tsx`. The page auto-updates as you edit the file.
+- **경험 기반 학습:**  
+  시장놀이를 통해 학생들이 경제 활동과 소비자의 역할을 체험할 수 있습니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **교육적 활용:**  
+  공개수업에서 학생들의 참여와 흥미를 높여주는 실습 도구로 사용 가능합니다.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 사용 방법
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **앱 실행:**
+   marketplay.vercel.app
+   앱을 실행한 후, QR 스캔 기능을 선택합니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **QR코드 스캔:**  
+   수업 자료나 교사가 준비한 QR코드를 스캔합니다.
 
-## Deploy on Vercel
+3. **정보 확인:**  
+   스캔 결과로 해당 상품의 가격, 사물 정보와 함께 음성이 재생되어 상품에 대한 자세한 정보를 제공합니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **시장놀이 진행:**  
+   학생들은 제공된 정보를 바탕으로 시장놀이를 진행하며 경제 개념을 체험합니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 기술 스택
+
+- **프론트엔드:**
+  Next.js
+  사용자 인터페이스(UI) 구현
+
+- **기타:**
+  qr-scanner 라이브러리 사용
+
+---
+
