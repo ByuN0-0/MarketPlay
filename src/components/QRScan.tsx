@@ -62,48 +62,91 @@ const QRScan: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <div style={{ textAlign: "center", padding: "20px" }}>
-        <div style={{ fontSize: "60px" }}>도담 마트</div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <video
-            ref={videoRef}
-            style={{
-              width: "400px",
-              height: "400px",
-              borderStyle: "solid",
-              borderWidth: "3px",
-            }}
-          />
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-purple-50 py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        {/* 헤더 */}
+        <div className="text-center mb-8">
+          <h1 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
+            도담 마트
+          </h1>
+          <p className="text-gray-600 text-xl">QR 코드를 스캔하여 상품 정보를 확인하세요</p>
         </div>
-      </div>
 
-      {/* QR 코드 결과 출력 및 에러 메시지 */}
-      <div style={{ padding: "40px", textAlign: "center" }}>
-        {error ? (
-          <p style={{ color: "red" }}>{error}</p>
-        ) : result ? (
-          result.hypernym ? (
-            <p style={{ fontSize: "50px", textAlign: "center" }}>
-              {hypernymUtils(result.hypernym)} - {wordUtils(result.product)}
-            </p>
-          ) : result.product ? (
-            <p style={{ fontSize: "30px", textAlign: "center" }}>
-              {result.price}원, {result.product}
-            </p>
+        {/* 스캐너 영역 */}
+        <div className="flex justify-center mb-8">
+          <div className="relative">
+            <video
+              ref={videoRef}
+              className="w-96 h-96 rounded-xl shadow-lg border-4 border-purple-400"
+            />
+            <div className="absolute inset-0 border-2 border-white rounded-xl opacity-50 pointer-events-none"></div>
+          </div>
+        </div>
+
+        {/* 결과 및 에러 메시지 */}
+        <div className="py-6 px-8 bg-white rounded-xl shadow-md mb-8 min-h-24 text-center">
+          {error ? (
+            <p className="text-red-500 text-lg">{error}</p>
+          ) : result ? (
+            result.hypernym ? (
+              <div className="animate-fadeIn">
+                <p className="text-4xl font-bold text-purple-700 mb-2">
+                  {hypernymUtils(result.hypernym)}
+                </p>
+                <p className="text-3xl text-blue-600">{wordUtils(result.product)}</p>
+              </div>
+            ) : result.product ? (
+              <div className="animate-fadeIn">
+                <p className="text-3xl font-medium">
+                  <span className="text-blue-600">{result.product}</span> -
+                  <span className="text-purple-700 font-bold"> {result.price}원</span>
+                </p>
+              </div>
+            ) : (
+              <p className="text-3xl font-bold text-purple-700 animate-fadeIn">{result.price}원</p>
+            )
           ) : (
-            <p style={{ fontSize: "30px", textAlign: "center" }}>{result.price}원</p>
-          )
-        ) : null}
+            <p className="text-gray-500 italic">QR 코드를 스캔해주세요</p>
+          )}
+        </div>
+
+        {/* 상품 이미지 */}
+        {result?.product && result?.hypernym && (
+          <div className="bg-white p-6 rounded-xl shadow-md text-center mb-8 animate-fadeIn">
+            <Image
+              src={`/image/${result.product}.png`}
+              alt={result.product}
+              width={400}
+              height={400}
+              className="mx-auto rounded-lg shadow-sm"
+            />
+          </div>
+        )}
+
+        {/* 가격 이미지 */}
+        {result && result?.price && (
+          <div className="flex flex-wrap justify-center gap-4 animate-fadeIn">
+            {renderPriceImages(result.price)}
+          </div>
+        )}
       </div>
 
-      {/* 이미지와 결과에 따른 렌더링 */}
-      <div style={{ textAlign: "center" }}>
-        {result?.product && result?.hypernym && (
-          <Image src={`/image/${result.product}.png`} alt={result.product} width={400} />
-        )}
-        {result && result?.price && renderPriceImages(result.price)}
-      </div>
+      {/* CSS Animations */}
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out;
+        }
+      `}</style>
     </div>
   );
 };
